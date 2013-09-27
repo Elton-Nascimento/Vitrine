@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="ConsultaCep">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cep" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaCepResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ConsultaCepResult" type="tns:stcCep" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="stcCep">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="CepLogradouro" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SiglaEstado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NomeCidade" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NomeBairro" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NomeLogradouro" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ConsultaCepSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultaCep" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaCepSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultaCepResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ws_CEPSoap">
+    <wsdl:operation name="ConsultaCep">
+      <wsdl:input message="tns:ConsultaCepSoapIn" />
+      <wsdl:output message="tns:ConsultaCepSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ws_CEPSoap" type="tns:ws_CEPSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ConsultaCep">
+      <soap:operation soapAction="http://tempuri.org/ConsultaCep" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ws_CEPSoap12" type="tns:ws_CEPSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ConsultaCep">
+      <soap12:operation soapAction="http://tempuri.org/ConsultaCep" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ws_CEP">
+    <wsdl:port name="ws_CEPSoap" binding="tns:ws_CEPSoap">
+      <soap:address location="http://localhost:3034/ws_Vitrine/ws_CEP.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ws_CEPSoap12" binding="tns:ws_CEPSoap12">
+      <soap12:address location="http://localhost:3034/ws_Vitrine/ws_CEP.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,116 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="~/Views/Construction/MasterPage2.master.cs"
+    Inherits="MasterPage2" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<!doctype html>
+<html lang="pt-br">
+<head id="Head1" runat="server">
+    <title>Compre da Vitrine</title>
+    <link rel="Stylesheet" type="text/css" href="../../Content/style.css" />
+    <link rel="shortcut icon" type="image/ico" href="../../Content/Imagens/favicon.ico" />
+    <link rel="stylesheet" href="../../Content/screen.css" type="text/css" />
+    <link rel="stylesheet" href="../../Content/lightbox.css" type="text/css" />
+</head>
+<body>
+    <form id="form1" runat="server">
+    <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
+    </asp:ToolkitScriptManager>
+    <div id="site">
+        <div id="topo">
+            <div id="tit-sub">
+                <div style="height: 22px">
+                    <a href="../Shared/Home.aspx" class="aTitle"><span class="tit">Compre da Vitrine</span></a><br />
+                </div>
+                <div style="height: 18px">
+                    <a href="../Shared/Home.aspx" class="aTitle"><span class="subtit">A Vitrine da sua Região</span></a></div>
+            </div>
+            <asp:Image ID="Image1" ImageUrl="~/Content/Imagens/logo.png" CssClass="logo" runat="server" />
+            <asp:Panel ID="pnlContHeader" runat="server" CssClass="pnl-header" Width="193px">
+                <asp:LinkButton ID="lbtn1" runat="server" CssClass="hplogin" OnClick="lbtn1_Click">Login</asp:LinkButton>
+                <asp:LinkButton ID="lbtn2" runat="server" CssClass="hplcadastro" OnClick="lbtn2_Click">Cadastro</asp:LinkButton>
+            </asp:Panel>
+        </div>
+        <div id="menu-hr">
+            <div id="menu">
+                <ul id="nav">
+                    <li><a href="../Shared/Home.aspx">Home</a></li>
+                    <li class="menu-separador"></li>
+                    <li><a href="../Shared/PesquisaProduto.aspx">Produtos</a></li>
+                    <li class="menu-separador"></li>
+                    <li><a href="../Shared/Sobre.aspx">Sobre</a>
+                        <ul style="padding-left: 0px;">
+                            <li><a href="../Shared/Sobre.aspx">Compra da Vitrine</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-separador"></li>
+                    <li>
+                        <asp:Panel ID="Panel1" runat="server" CssClass="pnlbusca" Width="352px">
+                            <asp:TextBox ID="txbProduto" runat="server" Width="314px" ClientIDMode="Static" 
+                                MaxLength="100"></asp:TextBox>
+                            <asp:AutoCompleteExtender ID="txbProduto_AutoCompleteExtender" runat="server" Enabled="True"
+                                TargetControlID="txbProduto" MinimumPrefixLength="1" CompletionInterval="0" ServiceMethod="PesquisarProdutos"
+                                ServicePath="~/Views/Construction/AutoComplete.aspx" EnableCaching="true" BehaviorID="AutoCompleteExPro"
+                                CompletionSetCount="10" CompletionListCssClass="autocomplete_completionListElement"
+                                CompletionListItemCssClass="autocomplete_listItem" CompletionListHighlightedItemCssClass="autocomplete_highlightedListItem"
+                                UseContextKey="True">
+                                <Animations>
+                <OnShow>
+                    <Sequence>
+                        <%-- Make the completion list transparent and then show it --%>
+                        <OpacityAction Opacity="0" />
+                        <HideAction Visible="true" />
+                            
+                        <%--Cache the original size of the completion list the first time
+                            the animation is played and then set it to zero --%>
+                        <ScriptAction Script="
+                            // Cache the size and setup the initial size
+                            var behavior = $find('AutoCompleteExCli');
+                            if (!behavior._height) {
+                                var target = behavior.get_completionList();
+                                behavior._height = target.offsetHeight - 2;
+                                target.style.height = '0px';
+                            }" />
+                            
+                        <%-- Expand from 0px to the appropriate size while fading in --%>
+                        <Parallel Duration=".4">
+                            <FadeIn />
+                            <Length PropertyKey="height" StartValue="0" EndValueScript="$find('AutoCompleteExPro')._height" />
+                        </Parallel>
+                    </Sequence>
+                </OnShow>
+                <OnHide>
+                    <%-- Collapse down to 0px and fade out --%>
+                    <Parallel Duration=".4">
+                        <FadeOut />
+                        <Length PropertyKey="height" StartValueScript="$find('AutoCompleteExPro')._height" EndValue="0" />
+                    </Parallel>
+                </OnHide>
+                                </Animations>
+                            </asp:AutoCompleteExtender>
+                            <asp:ImageButton ID="ImageButton1" runat="server" CssClass="btnbusca" ImageUrl="~/Content/Imagens/busca_icon.gif" />
+                        </asp:Panel>
+                    </li>
+                    <li class="menu-separador"></li>
+                    <li>
+                        <asp:LinkButton ID="lkbMinhaArea" runat="server" OnClick="lkbMinhaArea_Click">Minha Area</asp:LinkButton>
+					</li>
+                    <li class="menu-separador"></li>
+                    <li>
+                        <asp:LinkButton ID="lkbFinalizaCompra" runat="server">Finaliza Compra</asp:LinkButton>
+					</li>
+                </ul>
+            </div>
+        </div>
+        <div id="conteudo2">
+            <asp:ContentPlaceHolder ID="ContCont" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <div id="rodape">
+            <span class="coprodape">Compre da Vitrine 2012. Todos os Direitos Reservados</span>
+        </div>
+        <div id="both">
+        </div>
+    </div>
+    </form>
+</body>
+</html>
